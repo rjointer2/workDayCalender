@@ -20,6 +20,9 @@
 
 const dayBtnCont = document.querySelector('.dayBtn-container');
 const timeBlockCont = document.querySelector('.timeBlock-container');
+const today = document.querySelector('.today')
+
+today.innerHTML = "Today"
 
 
 // DAY BUTTONS
@@ -34,19 +37,28 @@ class Button {
         let btnText = document.createTextNode(day);
         btn.appendChild(btnText)
 
-        dayBtnCont.appendChild(btn)
+        return dayBtnCont.appendChild(btn)
     }
 }
 
 const dayBtn = new Button()
 
-dayBtn.constructBtn('Monday')
-dayBtn.constructBtn('Tuesday')
-dayBtn.constructBtn('Wednesday')
-dayBtn.constructBtn('Thurday')
-dayBtn.constructBtn('Friday')
-dayBtn.constructBtn('Saturday')
-dayBtn.constructBtn('Sunday')
+let monday = dayBtn.constructBtn('Monday')
+let tuesday = dayBtn.constructBtn('Tuesday')
+let wednesday = dayBtn.constructBtn('Wednesday')
+let thurday = dayBtn.constructBtn('Thurday')
+let friday = dayBtn.constructBtn('Friday')
+let saturday = dayBtn.constructBtn('Saturday')
+let sunday = dayBtn.constructBtn('Sunday')
+
+
+
+/* TIME BLOCKS */
+
+monday.addEventListener('click', () => {
+    
+})
+
 
 
 
