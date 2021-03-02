@@ -16,6 +16,10 @@
 
 */
 
+// ARRAY FOR DATA TO BE ALLOCATED
+
+const arr = [];
+
 // HTML SELECTED ELEMENTS
 
 const dayBtnCont = document.querySelector('.dayBtn-container');
@@ -27,29 +31,7 @@ today.innerHTML = "Today"
 
 // JSON OBJECT
 
-let daysJSON = [
-    {
-        "day" : "Sunday"
-    },
-    {
-        "day" : "Monday"
-    },
-    {
-        "day" : "Tuesday"
-    },
-    {
-        "day" : "Wednesday"
-    },
-    {
-        "day" : "Thursday"
-    },
-    {
-        "day" : "Friday"
-    },
-    {
-        "day" : "Saturday"
-    }
-];
+let daysJSON = [{"day":"Sunday"},{"day":"Monday"},{"day":"Tuesday"},{"day":"Wednesday"},{"day":"Thursday"},{"day":"Friday"},{"day":"Saturday"}];
 
 /* BUTTON OBJECT */
 
@@ -92,35 +74,35 @@ let createBlock = (input, array) => {
 
         let item = document.createTextNode(hour);
         let form = document.createElement('input');
-        form.placeholder = "Please Emter Your Task New"
+        form.placeholder = "Please Emter Your Task New";
         /* WE NEED A VALUE FOR TASK */
+
+        let btn = document.createElement('button')
+        let btnText = document.createTextNode('Sumbit')
+        btn.appendChild(btnText)
+
+        btn.addEventListener('click', () => {
+            logData(hour, form.value)
+        })
         
         timeBlockCont.appendChild(div)
         div.appendChild(item)
         div.appendChild(form)
-
-
-
-        //let form = '<li>'+ hour + " " + "<input type='text' value='"+hour+"'" + "<br><br>" + "           Please Enter New Task" + "" + '</li>';
-
-        //timeBlockCont.innerHTML += form
-
-        /* let li = document.createElement('li');
-        let liText = document.createTextNode(hour);
-        let form = document.createElement('input');
-        let text = document.createTextNode('Enter New Plan')
-
-        let userInput = document.createElement('input');
-
-        timeBlockCont.appendChild(div)
-        div.appendChild(li)
-        li.appendChild(liText);
-        li.appendChild(form)
-        li.appendChild(text)
-        li.appendChild(userInput) */
-
+        div.appendChild(btn)
 
     }
+}
+
+const logData = (time, task) => {
+    let dataObject = {
+        "time" : time,
+        "task" : task
+    }
+
+    arr.push(dataObject);
+    let dataJSON = JSON.stringify(dataObject);
+    localStorage.setItem("array", dataJSON)
+    console.log(arr)
 }
 
 
