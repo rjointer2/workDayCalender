@@ -56,3 +56,13 @@ textarea{
   display: flex;
   justify-content: space-around;
 }
+
+input {
+  margin-left: var(--margin);
+  width: 70%;
+}
+
+.item,
+li {
+  margin: 2em;
+}

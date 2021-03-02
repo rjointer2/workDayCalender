@@ -25,39 +25,104 @@ const today = document.querySelector('.today')
 today.innerHTML = "Today"
 
 
-// DAY BUTTONS
+// JSON OBJECT
+
+let daysJSON = [
+    {
+        "day" : "Sunday"
+    },
+    {
+        "day" : "Monday"
+    },
+    {
+        "day" : "Tuesday"
+    },
+    {
+        "day" : "Wednesday"
+    },
+    {
+        "day" : "Thursday"
+    },
+    {
+        "day" : "Friday"
+    },
+    {
+        "day" : "Saturday"
+    }
+];
+
+/* BUTTON OBJECT */
 
 class Button {
-    constructor() {
-
+    constructor(data) {
+        this.data = data;
     }
 
-    constructBtn(day) {
-        let btn = document.createElement('button');
-        let btnText = document.createTextNode(day);
-        btn.appendChild(btnText)
+    generateBtn() {
+        for(let i in this.data) {
+            let btn = document.createElement('button');
+            btn.value = this.data[i].day
+            let btnText = document.createTextNode(this.data[i].day)
+            btn.appendChild(btnText)
+            
+            btn.addEventListener('click', () => {
+                createBlock(btn.value, ['5am','6am','7am', '8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm'])
+            })
 
-        return dayBtnCont.appendChild(btn)
+
+            dayBtnCont.appendChild(btn)
+        }
     }
 }
 
-const dayBtn = new Button()
+/* GENERATES BUTTONS */
 
-let monday = dayBtn.constructBtn('Monday')
-let tuesday = dayBtn.constructBtn('Tuesday')
-let wednesday = dayBtn.constructBtn('Wednesday')
-let thurday = dayBtn.constructBtn('Thurday')
-let friday = dayBtn.constructBtn('Friday')
-let saturday = dayBtn.constructBtn('Saturday')
-let sunday = dayBtn.constructBtn('Sunday')
+const buttons = new Button(daysJSON);
+buttons.generateBtn()
+
+let createBlock = (input, array) => {
+    timeBlockCont.innerHTML = '';
+
+    for( let i in array) {
+
+        let hour = array[i];
+
+        let div = document.createElement('div')
+        div.setAttribute('class', 'item')
+
+        let item = document.createTextNode(hour);
+        let form = document.createElement('input');
+        form.placeholder = "Please Emter Your Task New"
+        /* WE NEED A VALUE FOR TASK */
+        
+        timeBlockCont.appendChild(div)
+        div.appendChild(item)
+        div.appendChild(form)
 
 
 
-/* TIME BLOCKS */
+        //let form = '<li>'+ hour + " " + "<input type='text' value='"+hour+"'" + "<br><br>" + "           Please Enter New Task" + "" + '</li>';
 
-monday.addEventListener('click', () => {
-    
-})
+        //timeBlockCont.innerHTML += form
+
+        /* let li = document.createElement('li');
+        let liText = document.createTextNode(hour);
+        let form = document.createElement('input');
+        let text = document.createTextNode('Enter New Plan')
+
+        let userInput = document.createElement('input');
+
+        timeBlockCont.appendChild(div)
+        div.appendChild(li)
+        li.appendChild(liText);
+        li.appendChild(form)
+        li.appendChild(text)
+        li.appendChild(userInput) */
+
+
+    }
+}
+
 
 
 
