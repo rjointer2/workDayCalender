@@ -19,7 +19,7 @@
 // ARRAY FOR DATA TO BE ALLOCATED
 
 
-const dayJSON = [{"day":"Sunday","memory":[]},{"day":"Monday","memory":[]},{"day":"Tuesday","memory":[]},{"day":"Wednesday","memory":[]},{"day":"Thursday","memory":[]},{"day":"Friday","memory":[]},{"day":"Saturday","memory":[]}];
+let dayJSON = [{"day":"Sunday","memory":[]},{"day":"Monday","memory":[]},{"day":"Tuesday","memory":[]},{"day":"Wednesday","memory":[]},{"day":"Thursday","memory":[]},{"day":"Friday","memory":[]},{"day":"Saturday","memory":[]}];
 
  
 const btnCont = document.querySelector('.btns');
@@ -55,16 +55,16 @@ class App {
 const loadForm = (day) => {
 
     const hours = ['9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm'];
-    console.log(day.memory)
     form.innerHTML = '';
 
-    for ( let hour in hours ) {
+    for ( let i = 0; i < hours.length; i++ ) {
 
-        time = document.createTextNode(hours[hour])
+        time = document.createTextNode(hours[i])
 
         let div = document.createElement('div')
         let btn = document.createElement('button')
         let input = document.createElement('input');
+
 
         div.setAttribute('class', 'item')
         btnText = document.createTextNode('submit')
@@ -75,21 +75,42 @@ const loadForm = (day) => {
         div.appendChild(input)
         div.appendChild(btn)
 
+        let obj = {
+            "time" : hours[i],
+            "task" : ""
+        }
+
+        day.memory.push(obj)
+
+        btn.addEventListener('click', () => {
+            obj.task = input.value
+            console.log(dayJSON)
+            saveData()
+        })
 
         
     }
+
     
 }
 
-/* 
+const saveData = (data, h, t) => {
+
+
+    let stringData = JSON.stringify(dayJSON)
+    localStorage.setItem('storage', stringData)
+    
+    let grabData = localStorage.getItem('storage');
+    let parseData = JSON.parse(grabData);
+    dayJSON = parseData
+    console.log(parseData)
+
+
+    
+}
 
 
 
-let input = document.createElement('input');
-form.appendChild(input)
-
-
-*/
 
 const app = new App(dayJSON)
 app.init()
