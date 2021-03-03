@@ -1,0 +1,93 @@
+
+ 
+const arr = {
+    'Monday' : [],
+    'Tuesday' : [],
+    'Wednesday' : [],
+    'Thursday' : [],
+    'Friday' : [],
+    'Saturday' : [],
+    'Sunday' : []
+}
+
+// HTML SELECTED ELEMENTS
+
+const dCont = document.querySelector('.d-cont');
+const tCont = document.querySelector('.t-cont');
+const today = document.querySelector('.today')
+
+today.innerHTML = "Today"
+
+
+// JSON OBJECT
+
+let daysJSON = [{"day":"Sunday"},{"day":"Monday"},{"day":"Tuesday"},{"day":"Wednesday"},{"day":"Thursday"},{"day":"Friday"},{"day":"Saturday"}];
+
+/* BUTTON OBJECT */
+
+class Button {
+    constructor(data) {
+        this.data = data;
+    }
+
+    generateBtn() {
+        for(let i in this.data) {
+            let btn = document.createElement('button');
+            btn.value = this.data[i].day
+            let btnText = document.createTextNode(this.data[i].day)
+            btn.appendChild(btnText)
+            
+            btn.addEventListener('click', () => {
+                createBlock(btn.value, ['9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm'])
+            })
+
+
+            dCont.appendChild(btn)
+        }
+    }
+}
+
+/* GENERATES BUTTONS */
+
+const buttons = new Button(daysJSON);
+buttons.generateBtn()
+
+let createBlock = (input, array) => {
+    tCont.innerHTML = '';
+
+    let showDay = document.createElement('div')
+    showDay.innerHTML = input;
+    tCont.appendChild(showDay)
+    
+
+    for( let i in array) {
+
+        let hour = array[i];
+
+        let div = document.createElement('div')
+        div.setAttribute('class', 'item')
+
+        let item = document.createTextNode(hour);
+        let form = document.createElement('input');
+        form.placeholder = "Please Enter Your Task New";
+        /* WE NEED A VALUE FOR TASK */
+
+        let btn = document.createElement('button')
+        let btnText = document.createTextNode('Sumbit')
+        btn.appendChild(btnText)
+
+        let task = document.createElement('input');
+
+        tCont.appendChild(div)
+        div.appendChild(item)
+        div.appendChild(form)
+        div.appendChild(btn)
+        div.appendChild(task)
+
+        btn.addEventListener('click', () => {
+            console.log(arr)
+
+        })
+
+    }
+}

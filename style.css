@@ -4,12 +4,6 @@
   --margin: 1em
 }
 
-
-
-
-
-
-
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
@@ -38,31 +32,27 @@ textarea{
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  
   width: 90%
 }
 
-.timeBlock-container,
-.dayBtn-container,
-.timeBlock-container {
-  margin: var(--margin);
-  border: 1px solid black;
-  padding: var(--margin)
+
+.form {
+  display: flex;
+  flex-direction: column;
 }
 
-.dayBtn-container {
+button,
+input {
+  margin: .4em;
+}
+
+.btns {
   display: flex;
-  justify-content: space-around;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 input {
-  margin-left: var(--margin);
-  width: 70%;
-}
-
-.item,
-li {
-  margin: 2em;
+  border: 1.3px solid black;
 }
