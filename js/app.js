@@ -19,6 +19,9 @@
 
 let btnCont = document.querySelector('.btns');
 let form = document.querySelector('.form');
+let today = document.querySelector('.today');
+
+today.innerHTML = moment().format('l'); 
 
 
 // ARRAY FOR DATA TO BE ALLOCATED
@@ -63,15 +66,6 @@ window.onload = () => {
 }
 
 const readJSON = (data) => {
-    /* 
-
-        MAKE THE BUTTONS
-        MAKE THE BUTTONS SHOW THE TIME BLOCKS FOR THAT DAY
-        TAKE THE BUTTON'S FORM VALUE INTO MEMEORY WITH THE 
-            MEMORY ARRAY
-        SEND THE MEMORY ARRAY BACK TO THE LOCATION STORAGE
-
-    */
 
     for ( let key in data ) {
         buildBtns(data[key].day, data[key].memory, key, data)
@@ -95,8 +89,6 @@ const buildBtns = (day, storage, index, arr) => {
 }
 
 const buildForm = (data, index, obj, array) => {
-
-    //console.log(array)
 
     let div = document.createElement('div')
     let time = document.createTextNode(data.time)
