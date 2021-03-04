@@ -4,7 +4,6 @@
 
     MAKE A WEB APPLICATION THAT
     
-    - DISPLAY A DAY IN THE WEEK
     - THE DAY THAT IT IS CURRENTLY WILL DISPLAY FIRST
     - THE USER HAVES THE OPTION TO GO OTHER DAYS
     - THE DAY THAT'S OPEN THE USER SEES TIME BLOCK FOR 
@@ -16,105 +15,98 @@
 
 */
 
+// HTML QUERY SELECTED ELEMENTS
+
+let btnCont = document.querySelector('.btns');
+let form = document.querySelector('.form');
+
+
 // ARRAY FOR DATA TO BE ALLOCATED
 
-
-let dayJSON = [{"day":"Sunday","memory":[]},{"day":"Monday","memory":[]},{"day":"Tuesday","memory":[]},{"day":"Wednesday","memory":[]},{"day":"Thursday","memory":[]},{"day":"Friday","memory":[]},{"day":"Saturday","memory":[]}];
-
- 
-const btnCont = document.querySelector('.btns');
-const form = document.querySelector('.form')
-
-class App {
-    constructor(args) {
-        this.args = args;
-    }
-
-    init() {
-
-        for( let arg in this.args ) {
-
-
-            /* BUTTONS GENERATED */
-
-            let btn = document.createElement('button');
-            let btnText = document.createTextNode(this.args[arg].day);
-            btn.appendChild(btnText)
-            btnCont.appendChild(btn)
-            
-            btn.addEventListener('click', () => {
-                /* SEND THE DAY AND ARRAY ASSICOATED */
-                console.log(this.args[arg].day + " was loaded")
-                loadForm(this.args[arg])
-            })
-
-        }
-    }
-}
-
-const loadForm = (day) => {
-
-    const hours = ['9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm'];
-    form.innerHTML = '';
-
-    for ( let i = 0; i < hours.length; i++ ) {
-
-        time = document.createTextNode(hours[i])
-
-        let div = document.createElement('div')
-        let btn = document.createElement('button')
-        let input = document.createElement('input');
-
-
-        div.setAttribute('class', 'item')
-        btnText = document.createTextNode('submit')
-        btn.appendChild(btnText)
-
-        form.appendChild(div)
-        div.appendChild(time)
-        div.appendChild(input)
-        div.appendChild(btn)
-
+const initMem = () => {
+    /* ARRAYS */
+    let dataJSON = [];
+    let dayJSON = ["monday","tuesday","wednesday","thurday","friday","saturday","sunday"];
+    let timeJSON = ['9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm'];
+    /* ALLOCATE DAYS IN MEMORY OBJECT */
+    for( let i = 0; i < dayJSON.length; i++ ) {
         let obj = {
-            "time" : hours[i],
-            "task" : ""
+            "day" : dayJSON[i],
+            "memory" : []
         }
+        dataJSON.push(obj)
+        /* CONSTRUCT SLOTS */
+        for (let j = 0; j < timeJSON.length; j++ ) {
+            let slot = {
+                "time" : timeJSON[j],
+                "task" : '',
+                "complete": false
+            }
+            dataJSON[i].memory.push(slot)
+        }
+    } 
+    return dataJSON
+}
 
-        day.memory.push(obj)
+let memory = initMem();
 
-        btn.addEventListener('click', () => {
-            obj.task = input.value
-            console.log(dayJSON)
-            saveData()
-        })
-
-        
+window.onload = () => {
+    if(localStorage.getItem('localDrive') != null ) {
+        dataJSON = JSON.parse(localStorage.getItem('localStorage'))
+        /* FUNCTION TO HASH MEMORY IN HTML*/
+    } else {
+        /* FUNCTION TO BUILD APP */
+        readJSON(memory)
     }
-
-    
 }
 
-const saveData = (data, h, t) => {
+const readJSON = (data) => {
+    /* 
 
+        MAKE THE BUTTONS
+        MAKE THE BUTTONS SHOW THE TIME BLOCKS FOR THAT DAY
+        TAKE THE BUTTON'S FORM VALUE INTO MEMEORY WITH THE 
+            MEMORY ARRAY
+        SEND THE MEMORY ARRAY BACK TO THE LOCATION STORAGE
 
-    let stringData = JSON.stringify(dayJSON)
-    localStorage.setItem('storage', stringData)
-    
-    let grabData = localStorage.getItem('storage');
-    let parseData = JSON.parse(grabData);
-    dayJSON = parseData
-    console.log(parseData)
+    */
 
-
-    
+    for ( let key in data ) {
+        buildBtns(data[key].day, data[key].memory)
+    }
+  
 }
 
+const buildBtns = (day, storage) => {
+    let btn = document.createElement('button');
+    let btnText = document.createTextNode(day);
+
+    btnCont.appendChild(btn)
+    btn.appendChild(btnText)
+    btn.addEventListener('click', () => {
+        console.log( day + ' was inited')
+        form.innerHTML = '';
+        for(let i in storage) {
+            buildForm(storage[i])
+        }
+    })
+}
+
+const buildForm = (data) => {
 
 
+    console.log(data)
 
-const app = new App(dayJSON)
-app.init()
+    let div = document.createElement('div')
+    let time = document.createTextNode(data.time)
 
+    div.appendChild(time)
+
+    let input = document.createElement('input');
+
+    form.appendChild(div)
+
+}
 
 
 
