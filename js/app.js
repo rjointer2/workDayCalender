@@ -52,8 +52,10 @@ let memory = initMem();
 
 window.onload = () => {
     if(localStorage.getItem('localDrive') != null ) {
-        dataJSON = JSON.parse(localStorage.getItem('localStorage'))
+        dataJSON = JSON.parse(localStorage.getItem('localDrive'))
         /* FUNCTION TO HASH MEMORY IN HTML*/
+        readJSON(dataJSON)
+        console.log(dataJSON)
     } else {
         /* FUNCTION TO BUILD APP */
         readJSON(memory)
@@ -72,12 +74,12 @@ const readJSON = (data) => {
     */
 
     for ( let key in data ) {
-        buildBtns(data[key].day, data[key].memory)
+        buildBtns(data[key].day, data[key].memory, key, data)
     }
   
 }
 
-const buildBtns = (day, storage) => {
+const buildBtns = (day, storage, index, arr) => {
     let btn = document.createElement('button');
     let btnText = document.createTextNode(day);
 
@@ -87,24 +89,38 @@ const buildBtns = (day, storage) => {
         console.log( day + ' was inited')
         form.innerHTML = '';
         for(let i in storage) {
-            buildForm(storage[i])
+            buildForm(storage[i], index, i, arr)
         }
     })
 }
 
-const buildForm = (data) => {
+const buildForm = (data, index, obj, array) => {
 
-
-    console.log(data)
+    //console.log(array)
 
     let div = document.createElement('div')
     let time = document.createTextNode(data.time)
 
+    form.appendChild(div)
     div.appendChild(time)
 
     let input = document.createElement('input');
+    input.placeholder = array[index].memory[obj].task
+    div.appendChild(input)
+    
+    let btn = document.createElement('button');
+    let btnText = document.createTextNode('submit');
+    
+    btn.appendChild(btnText);
+    div.appendChild(btn);
 
-    form.appendChild(div)
+    btn.addEventListener('click', () => {
+        array[index].memory[obj].task = input.value
+        let dataJSON = JSON.stringify(array)
+        console.log(dataJSON)
+        localStorage.setItem('localDrive', dataJSON)
+        
+    })
 
 }
 
