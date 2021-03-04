@@ -46,12 +46,13 @@ body {
   margin-left: 25%;
 }
 
-input {
+textarea {
   border: 1.3px solid black;
-  margin: 10px;
-  font-size: 12px;
+  margin: 5px;
+  font-size: 14px;
   width: 50%;
 }
+
 
 
 

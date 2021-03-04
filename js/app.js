@@ -4,11 +4,10 @@
 
     MAKE A WEB APPLICATION THAT
 
-
-    -* shows the current day in form
-    - a place to display the task
-    - save the time and day the task on made
-    - display the time made and if completed next to the task & colors to display if the task completed, in-progess, or last week
+   - if a week passes since the task was made turn the button red
+   - display the currect we are on
+   - color the day that is current on the button
+   - display the page of the tasks from the cureent day
 
 */
 
@@ -16,9 +15,7 @@
 
 let btnCont = document.querySelector('.btns');
 let form = document.querySelector('.form');
-let shwDay = document.querySelector('.today');
 
-shwDay.innerHTML = moment().format('LL');
 
 
 // ARRAY FOR DATA TO BE ALLOCATED
@@ -40,7 +37,7 @@ const initMem = () => {
             let slot = {
                 "time" : timeJSON[j],
                 "task" : '',
-                "complete": false
+                "complete": 'pending'
             }
             dataJSON[i].memory.push(slot)
         }
@@ -94,7 +91,7 @@ const buildForm = (data, index, obj, array) => {
     form.appendChild(div)
     div.appendChild(time)
 
-    let input = document.createElement('input');
+    let input = document.createElement('textarea');
     input.placeholder = "Write Task Here"
 
     div.appendChild(input)
@@ -106,7 +103,7 @@ const buildForm = (data, index, obj, array) => {
     div.appendChild(btn);
 
     let taskCont = document.createElement('div');
-    let taskInput = document.createElement('input');
+    let taskInput = document.createElement('textarea');
     let taskText = document.createTextNode('Task ‎‏‏‎ ');
     taskCont.setAttribute('class', 'item')
 
@@ -115,11 +112,33 @@ const buildForm = (data, index, obj, array) => {
     taskCont.appendChild(taskInput);
     taskInput.placeholder = 'Task will be saved here'
     taskInput.value = array[index].memory[obj].task;
+
+    let taskBtn = document.createElement('button');
+    taskBtn.textContent = 'Completed?';
+    taskCont.appendChild(taskBtn)
+
+    if( array[index].memory[obj].complete == 'pending' ) {
+        taskBtn.style.backgroundColor = 'none';
+    } else if( array[index].memory[obj].complete === true )  {
+        taskBtn.textContent = 'Completed!'
+        taskBtn.style.backgroundColor = 'green'
+    } else {
+        taskBtn.textContent = 'Not Complete!'
+        taskBtn.style.backgroundColor = 'red'
+    }
+
+    taskBtn.addEventListener('click', () => {
+        array[index].memory[obj].complete = true
+        let dataJSON = JSON.stringify(array)
+        console.log(dataJSON)
+        localStorage.setItem('localDrive', dataJSON)
+    })
     
 
 
     btn.addEventListener('click', () => {
-        array[index].memory[obj].task = input.value
+
+        array[index].memory[obj].task = input.value + whenSaved();
         let dataJSON = JSON.stringify(array)
         console.log(dataJSON)
         localStorage.setItem('localDrive', dataJSON)
@@ -128,6 +147,14 @@ const buildForm = (data, index, obj, array) => {
 
 }
 
+let whenSaved = () => {
+    let time = moment().format('LT'); 
+    let date = moment().format('LL');
+
+    let status = ' : task created at ' + time + ', ' + date;
+
+    return status
+}
 
 
 
