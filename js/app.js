@@ -3,15 +3,12 @@
     GOALS 
 
     MAKE A WEB APPLICATION THAT
-    
-    - THE DAY THAT IT IS CURRENTLY WILL DISPLAY FIRST
-    - THE USER HAVES THE OPTION TO GO OTHER DAYS
-    - THE DAY THAT'S OPEN THE USER SEES TIME BLOCK FOR 
-        EACH HOUR FROM 9AM -> 5PM
-    - THE OPTION TO SAVE THE EVENT IN MEMEORY AND PERSIST
-    - THREE DIFFERENT COLOR TO TELL THE USER IF THE EVENT 
-        WAS IN THE PAST, PRESENT, FUTURE
-    -
+
+
+    -* shows the current day in form
+    - a place to display the task
+    - save the time and day the task on made
+    - display the time made and if completed next to the task & colors to display if the task completed, in-progess, or last week
 
 */
 
@@ -19,9 +16,9 @@
 
 let btnCont = document.querySelector('.btns');
 let form = document.querySelector('.form');
-let today = document.querySelector('.today');
+let shwDay = document.querySelector('.today');
 
-today.innerHTML = moment().format('l'); 
+shwDay.innerHTML = moment().format('LL');
 
 
 // ARRAY FOR DATA TO BE ALLOCATED
@@ -30,7 +27,7 @@ const initMem = () => {
     /* ARRAYS */
     let dataJSON = [];
     let dayJSON = ["monday","tuesday","wednesday","thurday","friday","saturday","sunday"];
-    let timeJSON = ['9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm'];
+    let timeJSON = ['09am','10am','11am','12pm','1pm‏‏‎ ‎‏‏‎ ‎','2pm ‎‏‏‎ ‎','3pm ‎‏‏‎ ‎','4pm ‎‏‏‎ ‎','5pm ‎‏‏‎ ‎'];
     /* ALLOCATE DAYS IN MEMORY OBJECT */
     for( let i = 0; i < dayJSON.length; i++ ) {
         let obj = {
@@ -93,18 +90,33 @@ const buildForm = (data, index, obj, array) => {
     let div = document.createElement('div')
     let time = document.createTextNode(data.time)
 
+
     form.appendChild(div)
     div.appendChild(time)
 
     let input = document.createElement('input');
-    input.placeholder = array[index].memory[obj].task
+    input.placeholder = "Write Task Here"
+
     div.appendChild(input)
     
     let btn = document.createElement('button');
-    let btnText = document.createTextNode('submit');
+    let btnText = document.createTextNode('Save Task');
     
     btn.appendChild(btnText);
     div.appendChild(btn);
+
+    let taskCont = document.createElement('div');
+    let taskInput = document.createElement('input');
+    let taskText = document.createTextNode('Task ‎‏‏‎ ');
+    taskCont.setAttribute('class', 'item')
+
+    div.appendChild(taskCont);
+    taskCont.appendChild(taskText);
+    taskCont.appendChild(taskInput);
+    taskInput.placeholder = 'Task will be saved here'
+    taskInput.value = array[index].memory[obj].task;
+    
+
 
     btn.addEventListener('click', () => {
         array[index].memory[obj].task = input.value
