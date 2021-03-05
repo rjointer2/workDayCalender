@@ -23,8 +23,11 @@ body {
   white-space: pre-wrap;
 }
 
+header {
+  margin-bottom: 1em;
+}
+
 .container {
-  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
