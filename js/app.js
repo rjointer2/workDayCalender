@@ -3,13 +3,7 @@
 
 let btnCont = document.querySelector('.btns');
 let form = document.querySelector('.form');
-
 let tdy = document.querySelector('.today');
-
-
-
-
-
 
 // ARRAY FOR DATA TO BE ALLOCATED
 
@@ -46,25 +40,18 @@ window.onload = () => {
         dataJSON = JSON.parse(localStorage.getItem('localDrive'))
         /* FUNCTION TO HASH MEMORY IN HTML*/
         readJSON(dataJSON)
-        console.log(dataJSON)
     } else {
         /* FUNCTION TO BUILD APP */
         readJSON(memory)
-        console.log('No memory found')
-        console.log('Creating Local Drive')
-        console.log(memory)
     }
 }
 
 const readJSON = (data) => {
-
     // SEND THE JSON OBJECT'S DAY, MEMORY, AND THE INDEX OF THE ARRAY
     // AND THE ARRAY ITSELF
-
     for ( let key in data ) {
         buildBtns(data[key].day, data[key].memory, key, data)
     }
-  
 }
 
 const buildBtns = (day, storage, index, arr) => {
@@ -205,5 +192,4 @@ const buildForm = (data, index, obj, array) => {
         localStorage.setItem('localDrive', dataJSON)
     })
     
-
 }
